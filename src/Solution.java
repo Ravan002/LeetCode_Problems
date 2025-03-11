@@ -124,4 +124,130 @@ public class Solution {
         }
         return total;
     }
+
+    public String reverseVowels(String s) {
+        int left=0;
+        int right=s.length()-1;
+        char[] sArray= s.toCharArray();
+
+        while(left<right){
+            if(!isValid(sArray[left])){
+                left++;
+            }
+            if(!isValid(sArray[right])){
+                right--;
+            }
+            if(isValid(sArray[left]) && isValid(sArray[right])){
+                char temp = sArray[left];
+                sArray[left++]=sArray[right];
+                sArray[right--]=temp;
+            }
+        }
+        return new String(sArray);
+    }
+    private boolean isValid(char c){
+        return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u'||
+                c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U';
+    }
+
+    public String reverseWords(String s) {
+        String[] words= s.trim().split("\\s+");
+        int left = 0, right = words.length - 1;
+        while (left < right) {
+            String temp = words[left];
+            words[left] = words[right];
+            words[right] = temp;
+
+            left++;
+            right--;
+        }
+        return String.join(" ",words);
+    }
+
+    public int[] productExceptSelf(int[] nums) {
+        int n = nums.length;
+        int[] result = new int[n];
+
+        int[] prefix = new int[n];
+        prefix[0] = 1;
+        for (int i = 1; i < n; i++) {
+            prefix[i] = prefix[i - 1] * nums[i - 1];
+        }
+        int suffix = 1;
+        for (int i = n - 1; i >= 0; i--) {
+            result[i] = prefix[i] * suffix;
+            suffix *= nums[i];
+        }
+
+        return result;
+    }
+
+    public int numberOfSubstrings(String s) {
+        int [] numberOfLetters= new int[3];
+        int totalSubstring=0;
+        int start=0;
+        int end=0;
+
+        while(end<s.length()){
+            numberOfLetters[s.charAt(end)-'a']++;
+            while(numberOfLetters[0]>0 && numberOfLetters[1]>0 && numberOfLetters[2]>0){
+
+                totalSubstring+=s.length()-end;
+                numberOfLetters[s.charAt(start) - 'a']--;
+                start++;
+            }
+            end++;
+        }
+
+        return totalSubstring;
+    }
+
+    // Not Complete
+    public boolean increasingTriplet(int[] nums) {
+        for(int i=1; i<nums.length-1;i++ ){
+
+            if(nums[i-1]<nums[i] && nums[i]<nums[i+1]){
+                System.out.println(nums[i-1]+" "+nums[i]+" "+nums[i+1]);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void moveZeroes(int[] nums) {
+
+        int cnt=0;
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]!=0){
+                int temp=nums[i];
+                nums[i]=nums[cnt];
+                nums[cnt]=temp;
+                cnt++;
+            }
+        }
+    }
+
+    public boolean isSubsequence(String s, String t) {
+
+        // s is empty return true
+        if (s.isEmpty())
+            return true;
+
+        // if s length is more than t length it is false
+        if (s.length() > t.length())
+            return false;
+        // if both equal length, both should be same string for being true
+        if (s.length() == t.length())
+            return s.equals(t);
+        int i=0;
+        int j=0;
+        while(j<s.length() && i<t.length()){
+            if(s.charAt(j) == t.charAt(i++)){
+                j++;
+            }
+        }
+        return j==s.length();
+    }
+
 }
+
