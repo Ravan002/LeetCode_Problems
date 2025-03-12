@@ -82,21 +82,6 @@ public class Solution {
     }
 
     public int numberOfAlternatingGroups(int[] colors, int k) {
-// Time limit exceed
-//        for(int i=0; i< colors.length; i++){
-//            boolean isvalid=true;
-//            int count =0;
-//            for(int j=i;j<i+k-1;j++){
-//                if(colors[j%colors.length]==colors[(j+1)%colors.length]){
-//                    isvalid=false;
-//                    break;
-//                }
-//            }
-//            if(isvalid){
-//                total++;
-//            }
-//        }
-
         int total=0;
         int [] newColorSet= new int[colors.length+k-1];
         System.arraycopy(colors, 0, newColorSet, 0, colors.length);
@@ -249,5 +234,26 @@ public class Solution {
         return j==s.length();
     }
 
+    public boolean isPowerOfFour(int n) {
+        if(n==0)
+            return false;
+        if(n==1)
+            return true;
+        if(n%4==0)
+            return isPowerOfFour(n/4);
+        return false;
+    }
+
+    public boolean isPowerOfTwo(int n) {
+        if(n==0)
+            return false;
+        if(n==1){
+            return true;
+        }
+        if(n%2!=0){
+            return false;
+        }
+        return isPowerOfTwo(n/2);
+    }
 }
 
